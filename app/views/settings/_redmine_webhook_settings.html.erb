@@ -1,0 +1,16 @@
+<p>
+    <label>API URL(required):</label>
+    <%= text_field_tag 'settings[api_url]', @settings[:api_url] %>
+</p>
+<p>
+    <label>Auth Token(required):</label>
+    <%= text_field_tag 'settings[token]', @settings[:token] %>
+</p>
+<p>
+    <label>per project setting:</label>
+    <%= check_box_tag "settings[per_project]", true, @settings[:per_project] %>
+</p>
+<p>
+    <label>show manual post button:</label>
+    <%= check_box_tag "settings[show_button]", true, @settings[:show_button] %>
+</p>

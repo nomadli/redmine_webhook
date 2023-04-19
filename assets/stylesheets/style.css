@@ -1,0 +1,4 @@
+.icon-webhook {
+    background-image: url('/plugin_assets/redmine_webhook/images/click.png');
+    cursor: pointer;
+}
