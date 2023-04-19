@@ -18,15 +18,32 @@ class RedmineWebhookHelper
             return ""
         end
 
-        host = Setting.plugin_redmine_webhook[:api_url]
+        webhooks = Array.new
+        if Setting.plugin_redmine_webhook[:per_project]
+            project = cissue.project
+            webhooks = Webhook.where(:project_id => project.project.id)
+            webhooks = Webhook.where(:project_id => 0) unless webhooks && webhooks.length > 0
+            return unless webhooks
+        elsif Setting.plugin_redmine_webhook[:api_url]
+            webhook = Webhook.new(:project_id => 0)
+            webhook.url = Setting.plugin_redmine_webhook[:api_url]
+            webhooks << webhook
+        end
+
+        if webhooks.length() <= 0
+            return ""
+        end
+
+        api_url = webhooks[0].url
         token = Setting.plugin_redmine_webhook[:token]
         controller = context[:controller]
         data = {
             :action => 3,
             :issue => RedmineWebhook::IssueWrapper.new(cissue).to_map,
-            :url => controller.nil? ? 'not yet implemented' : controller.issue_url(cissue),
+            :url => controller.nil? ? "not yet implemented" : controller.issue_url(cissue),
             :user => RedmineWebhook::UserWrapper.new(User.current).to_map
         }.to_json
+        data = data.gsub(/\\/, '\\'=>'\\\\')
 
         html = '<script>
         var button = $("<a class=\"icon icon-webhook\" onclick=\"click_post()\">'+ l(:button_label) +'</a>");
@@ -34,7 +51,7 @@ class RedmineWebhookHelper
 
         function click_post() {
             var xhr = new XMLHttpRequest();
-            xhr.open("POST", "' + host + '", true);
+            xhr.open("POST", "' + api_url + '", true);
             xhr.withCredentials = true;
             xhr.setRequestHeader("Content-type","application/json; charset=utf-8");
             '
