@@ -1,6 +1,7 @@
 ## Redmine WebHook Plugin
 - A Redmine plugin posts webhook on creating and updating tickets.
 - Redmine 4.0 or later
+- see git@github.com:agileware-jp/redmine_banner.git
 
 ## Install
 ```shell
