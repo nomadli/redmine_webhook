@@ -37,6 +37,19 @@ type NMLIRedmineUser struct {
     IdentityURL string `json:"identity_url"`
 }
 
+type NMLIRedmineVersion struct {
+    ID              int64  `json:"id"`
+    ProjectID       int64  `json:"project_id"`
+    Name            string `json:"name"`
+    Description     string `json:"description"`
+    EffectiveDate   string `json:"effective_date"`
+    CreateDate      string `json:"created_on"`
+    UpdatedDate     string `json:"updated_on"`
+    WikiTitle       string `json:"wiki_page_title"`
+    State           string `json:"status"`
+    Sharing         string `json:"sharing"`
+}
+
 type NMLIRedmineIssue struct {
     ID              int64               `json:"id"`
 	RootID          int64               `json:"root_id"`
@@ -46,7 +59,7 @@ type NMLIRedmineIssue struct {
     Tracker         NMLIRedmineField    `json:"tracker"`
 	Status          NMLIRedmineField    `json:"status"`
     Priority        NMLIRedmineField    `json:"priority"`
-    FixedVersion    NMLIRedmineField    `json:"fixed_version"`
+    FixedVersion    NMLIRedmineVersion  `json:"fixed_version"`
 	Author          NMLIRedmineUser     `json:"author"`
     Worker          NMLIRedmineUser     `json:"assigned_to"`
     DoneRatio       int64               `json:"done_ratio"`

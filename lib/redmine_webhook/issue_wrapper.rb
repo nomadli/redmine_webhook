@@ -21,6 +21,7 @@ module RedmineWebhook
                 :total_estimated_hours => @issue.total_estimated_hours,
                 :is_private => @issue.is_private,
                 :lock_version => @issue.lock_version,
+                :fixed_version => Version.find_by_id(@issue.fixed_version_id),
                 :custom_fields => @issue.custom_field_values.collect { |value| RedmineWebhook::CustomFieldValueWrapper.new(value).to_map },
                 :project => RedmineWebhook::ProjectWrapper.new(@issue.project).to_map,
                 :status => RedmineWebhook::StatusWrapper.new(@issue.status).to_map,
