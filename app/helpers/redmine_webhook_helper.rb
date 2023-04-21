@@ -47,7 +47,9 @@ class RedmineWebhookHelper
 
         html = '<script>
         var button = $("<a class=\"icon icon-webhook\" onclick=\"click_post()\">'+ l(:button_label) +'</a>");
-        $("#content .contextual:first").prepend(button);
+        button.insertBefore($("#content>.contextual:first .drdn"));
+        button = $("<a class=\"icon icon-webhook\" onclick=\"click_post()\">'+ l(:button_label) +'</a>");
+        button.insertBefore($("#content>.contextual:last .drdn"));
 
         function click_post() {
             var xhr = new XMLHttpRequest();
